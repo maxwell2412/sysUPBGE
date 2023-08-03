@@ -19,6 +19,10 @@ def main(cont):
             volante_carro = obj
         if "cam_car" in obj.getPropertyNames():
             cam_car = obj
+        if "porta_dir" in obj.getPropertyNames():
+            porta_dir = obj
+        if "porta_esq" in obj.getPropertyNames():
+            porta_esq = obj
 
     print(rodas_carro)
     sensor = cont.sensors[0]
@@ -37,7 +41,7 @@ def main(cont):
 
 class Car(KX_GameObject):
 
-    def __init__(self, car, rodas_carro, volante_carro, cam_car, comprimento_suspensao=0.5, raio_roda=0.72, raio_roda_2= 0.72, distancia_eixo=1.75,
+    def __init__(self, car, rodas_carro, volante_carro, cam_car, porta_dir, porta_esq, comprimento_suspensao=0.5, raio_roda=0.72, raio_roda_2= 0.72, distancia_eixo=1.75,
                  roda_dianteira_pos=3.35, roda_traseira_pos=-3.35, influencia=0.25, rigidez=30.0, amortecimento=60.0,
                  compressao=1.5, atrito=3, altura_local=-0.7, estabilidade=0.1):
         #variaveis de obj do grupo 
@@ -45,6 +49,8 @@ class Car(KX_GameObject):
         self.car = car
         self.volante = volante
         self.cam = cam_car
+        self.porta_dir = porta_dir
+        self.porta_esq = porta_esq
         #propriedades de constraints
         self.comprimento_suspensao = comprimento_suspensao
         self.raio_roda = raio_roda
