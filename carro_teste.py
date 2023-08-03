@@ -18,7 +18,7 @@ def main(cont):
         if "volante" in obj.getPropertyNames():
             volante_carro = obj
         if "cam_car" in obj.getPropertyNames():
-            cam_car = obj
+            cam_carro = obj
         if "porta_dir" in obj.getPropertyNames():
             porta_dir = obj
         if "porta_esq" in obj.getPropertyNames():
@@ -34,7 +34,7 @@ def main(cont):
     # ao iniciar o jogo vamos transformar o objeto carro em uma instancia da classe
     if sensor.positive:
         print("sensor ativado!")
-        own = Car(own, rodas_carro)
+        own = Car(own, rodas_carro, volante_carro, cam_carro, porta_dir, porta_esq, lugar_esq, lugar_dir)
         print("objeto carro criado !")
         # instanciamos o obj a partir da classe Car que herda da KX_GameObject
         own.initCar(own)
@@ -45,18 +45,18 @@ def main(cont):
 
 class Car(KX_GameObject):
 
-    def __init__(self, car, rodas_carro, volante_carro, cam_car, porta_dir, porta_esq, lugar_esq, lugar_dir comprimento_suspensao=0.5, raio_roda=0.72, raio_roda_2= 0.72, distancia_eixo=1.75,
-                 roda_dianteira_pos=3.35, roda_traseira_pos=-3.35, influencia=0.25, rigidez=30.0, amortecimento=60.0,
-                 compressao=1.5, atrito=3, altura_local=-0.7, estabilidade=0.1):
+    def __init__(self, car, rodas_carro, volante_carro, cam_carro, porta_dir, porta_esq, lugar_esq, lugar_dir, comprimento_suspensao=0.4, raio_roda=0.83, raio_roda_2= 0.83, distancia_eixo=1.75,
+                 roda_dianteira_pos=3.35, roda_traseira_pos=-3.35, influencia=0.50, rigidez=50.0, amortecimento=10.0,
+                 compressao=1.3, atrito=3, altura_local=-0.8, estabilidade=0.1):
         #variaveis de obj do grupo 
         self.rodas = rodas_carro
         self.car = car
-        self.volante = volante
-        self.cam = cam_car
-        self.porta_dir = porta_dir
-        self.porta_esq = porta_esq
-        self.lugar_dir = lugar_dir
-        self.lugar_esq = lugar_esq
+        self.volante_carro = volante_carro
+        self.cam = cam_carro
+        self.porta_direita = porta_dir
+        self.porta_esquerda = porta_esq
+        self.lugar_esquerda = lugar_esq
+        self.lugar_direita = lugar_dir
         #propriedades de constraints
         self.comprimento_suspensao = comprimento_suspensao
         self.raio_roda = raio_roda
