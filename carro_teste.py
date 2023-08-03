@@ -5,8 +5,7 @@ from bge.types import *
 
 
 def main(cont):
-    print("chamou main")
-    """""""# type: (SCA_PythonController) -> None"""
+    # type: (SCA_PythonController) -> None
     own = cont.owner  # type: KX_GameObject
     cenaAtual = g.getCurrentScene()
     print("pegou a cena e o own")
@@ -16,6 +15,11 @@ def main(cont):
     for obj in objGrupo:
         if "roda" in obj.getPropertyNames():
             rodas_carro.append(obj)
+        if "volante" in obj.getPropertyNames():
+            volante_carro = obj
+        if "cam_car" in obj.getPropertyNames():
+            cam_car = obj
+
     print(rodas_carro)
     sensor = cont.sensors[0]
     print("pegou o sensor ", sensor)
@@ -28,17 +32,20 @@ def main(cont):
         own.initCar(own)
         print("objeto carro iniciado !")
 
-        #own.update()  # chamando a função que roda sempre
+        #own.update()  # chamando a função que roda sempre 
 
 
 class Car(KX_GameObject):
 
-    def __init__(self, car, rodas_carro, comprimento_suspensao=0.5, raio_roda=0.72, raio_roda_2= 0.72, distancia_eixo=1.75,
+    def __init__(self, car, rodas_carro, volante_carro, cam_car, comprimento_suspensao=0.5, raio_roda=0.72, raio_roda_2= 0.72, distancia_eixo=1.75,
                  roda_dianteira_pos=3.35, roda_traseira_pos=-3.35, influencia=0.25, rigidez=30.0, amortecimento=60.0,
                  compressao=1.5, atrito=3, altura_local=-0.7, estabilidade=0.1):
-        print("fase1")
+        #variaveis de obj do grupo 
         self.rodas = rodas_carro
         self.car = car
+        self.volante = volante
+        self.cam = cam_car
+        #propriedades de constraints
         self.comprimento_suspensao = comprimento_suspensao
         self.raio_roda = raio_roda
         self.raio_roda_2 = raio_roda_2
@@ -80,6 +87,7 @@ class Car(KX_GameObject):
                 wheelAttachPosLocal = [-self.distancia_eixo, self.roda_traseira_pos, self.altura_local]
                 vehicle.addWheel(roda, wheelAttachPosLocal, wheelAttachDirLocal, wheelAxeleLocal,
                                  self.comprimento_suspensao, self.raio_roda_2, 0)
+            
 
             print(roda, indice)
             vehicle.setRollInfluence(self.influencia, indice)
